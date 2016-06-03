@@ -11,6 +11,12 @@
 		B231414F1D008180002D17FB /* AddTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B231414E1D008180002D17FB /* AddTableViewController.swift */; };
 		B23141551D00B122002D17FB /* take picture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B23141541D00B122002D17FB /* take picture.jpg */; };
 		B23141571D00B6E2002D17FB /* SelectValveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23141561D00B6E2002D17FB /* SelectValveViewController.swift */; };
+		B231415D1D00C906002D17FB /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = B231415C1D00C906002D17FB /* Image.swift */; };
+		B23141611D00CEEF002D17FB /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B231415F1D00CEEF002D17FB /* DataModel.xcdatamodeld */; };
+		B23141631D00CF12002D17FB /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23141621D00CF12002D17FB /* DataController.swift */; };
+		B23141661D00CF9B002D17FB /* Log+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23141641D00CF9B002D17FB /* Log+CoreDataProperties.swift */; };
+		B23141671D00CF9B002D17FB /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23141651D00CF9B002D17FB /* Log.swift */; };
+		B231416A1D00D03A002D17FB /* LogRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B23141691D00D03A002D17FB /* LogRepository.swift */; };
 		B279267A1CDBAF79005C502F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B27926791CDBAF79005C502F /* AppDelegate.swift */; };
 		B279267C1CDBAF79005C502F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B279267B1CDBAF79005C502F /* ViewController.swift */; };
 		B279267F1CDBAF79005C502F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B279267D1CDBAF79005C502F /* Main.storyboard */; };
@@ -60,6 +66,12 @@
 		B231414E1D008180002D17FB /* AddTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddTableViewController.swift; sourceTree = "<group>"; };
 		B23141541D00B122002D17FB /* take picture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "take picture.jpg"; sourceTree = "<group>"; };
 		B23141561D00B6E2002D17FB /* SelectValveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectValveViewController.swift; sourceTree = "<group>"; };
+		B231415C1D00C906002D17FB /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		B23141601D00CEEF002D17FB /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		B23141621D00CF12002D17FB /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		B23141641D00CF9B002D17FB /* Log+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Log+CoreDataProperties.swift"; path = "../Log+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		B23141651D00CF9B002D17FB /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Log.swift; path = ../Log.swift; sourceTree = "<group>"; };
+		B23141691D00D03A002D17FB /* LogRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogRepository.swift; sourceTree = "<group>"; };
 		B27926761CDBAF79005C502F /* Value.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Value.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B27926791CDBAF79005C502F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B279267B1CDBAF79005C502F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -121,6 +133,8 @@
 		B231414A1D008078002D17FB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B23141641D00CF9B002D17FB /* Log+CoreDataProperties.swift */,
+				B23141651D00CF9B002D17FB /* Log.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -142,6 +156,31 @@
 				B27926821CDBAF79005C502F /* LaunchScreen.storyboard */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		B23141591D00C5DF002D17FB /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				B231415C1D00C906002D17FB /* Image.swift */,
+				B23141621D00CF12002D17FB /* DataController.swift */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
+		B231415E1D00CED9002D17FB /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				B231415F1D00CEEF002D17FB /* DataModel.xcdatamodeld */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
+		B23141681D00D028002D17FB /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				B23141691D00D03A002D17FB /* LogRepository.swift */,
+			);
+			name = Repositories;
 			sourceTree = "<group>";
 		};
 		B279266D1CDBAF79005C502F = {
@@ -167,6 +206,9 @@
 		B27926781CDBAF79005C502F /* Value */ = {
 			isa = PBXGroup;
 			children = (
+				B23141681D00D028002D17FB /* Repositories */,
+				B231415E1D00CED9002D17FB /* Data */,
+				B23141591D00C5DF002D17FB /* Helper */,
 				B27926851CDBAF79005C502F /* Info.plist */,
 				B27926791CDBAF79005C502F /* AppDelegate.swift */,
 				B279267B1CDBAF79005C502F /* ViewController.swift */,
@@ -382,9 +424,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B231416A1D00D03A002D17FB /* LogRepository.swift in Sources */,
 				B231414D1D00815B002D17FB /* ListTableViewController.swift in Sources */,
+				B231415D1D00C906002D17FB /* Image.swift in Sources */,
+				B23141671D00CF9B002D17FB /* Log.swift in Sources */,
 				B23141571D00B6E2002D17FB /* SelectValveViewController.swift in Sources */,
+				B23141611D00CEEF002D17FB /* DataModel.xcdatamodeld in Sources */,
 				B279267C1CDBAF79005C502F /* ViewController.swift in Sources */,
+				B23141631D00CF12002D17FB /* DataController.swift in Sources */,
+				B23141661D00CF9B002D17FB /* Log+CoreDataProperties.swift in Sources */,
 				B279267A1CDBAF79005C502F /* AppDelegate.swift in Sources */,
 				B231414F1D008180002D17FB /* AddTableViewController.swift in Sources */,
 			);
@@ -642,6 +690,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B231415F1D00CEEF002D17FB /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B23141601D00CEEF002D17FB /* DataModel.xcdatamodel */,
+			);
+			currentVersion = B23141601D00CEEF002D17FB /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = B279266E1CDBAF79005C502F /* Project object */;
 }

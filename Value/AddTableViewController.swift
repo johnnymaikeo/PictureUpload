@@ -7,15 +7,20 @@
 //
 
 import UIKit
+import CoreLocation
 
 
 
-class AddTableViewController: UITableViewController, UITextFieldDelegate {
+class AddTableViewController: UITableViewController, UITextFieldDelegate, CLLocationManagerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var textFieldValve: UITextField!
     @IBOutlet weak var textFieldLatitude: UITextField!
     @IBOutlet weak var textFieldLongitude: UITextField!
     @IBOutlet weak var imageValve: UIImageView!
+    
+    var locationManager:CLLocationManager!
+    var imagePicker: UIImagePickerController!
+    let imageHelper:ImageHelper = ImageHelper()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +30,24 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
+    override func viewWillAppear(animated: Bool) {
+        self.locationManager = CLLocationManager()
+        locationManager.requestAlwaysAuthorization()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startMonitoringSignificantLocationChanges()
+    }
+    
+    // MARK: - Location Manager Delegate
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+        
+        self.textFieldLatitude.text = String(locValue.latitude)
+        self.textFieldLongitude.text = String(locValue.longitude)
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -110,10 +132,62 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate {
     
     @IBAction func saveValveSubmission(sender: AnyObject) {
         
+        let repository:LogRepository = LogRepository()
+        let log:Log = repository.newLog()
+        
+        log.date = NSDate()
+        log.valve = self.textFieldValve.text
+        log.latitude = Double(self.textFieldLatitude.text!)
+        log.longitude = Double(self.textFieldLongitude.text!)
+        
+        repository.save()
+        
         // Return to previous screen
         if let navigation = self.navigationController {
             navigation.popViewControllerAnimated(true)
         }
     }
+    
+    @IBAction func takePicture(sender: AnyObject) {
+        imagePicker =  UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .Camera
+        
+        presentViewController(imagePicker, animated: true, completion: nil)
+    }
+    
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        
+        imagePicker.dismissViewControllerAnimated(true, completion: nil)
+        imageValve.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        
+    }
+    
+    func imagePath (reminder: Int) -> String {
+        
+        // Define the specific path, image name
+        
+        let myImageName = "img" + String(reminder) +  ".png"
+        let imagePath = imageHelper.fileInDocumentsDirectory(myImageName)
+        
+        return imagePath
+        
+    }
+    
+    func savePicture (reminder: Int) {
+        
+        if let image = imageValve.image {
+            
+            imageHelper.saveImage(image, path: self.imagePath(reminder))
+            
+        } else {
+            
+            // Cold not save date error
+            
+        }
+        
+    }
+    
 
 }

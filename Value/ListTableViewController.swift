@@ -10,48 +10,54 @@ import UIKit
 
 class ListTableViewController: UITableViewController {
 
- 
+    var repository:LogRepository!
+    var history:[Log]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        repository = LogRepository()
     }
 
+    override func viewWillAppear(animated: Bool) {
+        self.history = repository.list()
+        self.tableView.reloadData()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return self.history.count
     }
 
     @IBAction func openValveSubmissionForm(sender: AnyObject) {
         
     }
     
-    /*
+    // MARK: - Table view delegate
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("ListSubmissionsCell", forIndexPath: indexPath)
 
-        // Configure the cell...
+        let log:Log = self.history[indexPath.row]
+        
+        let dateFormater = NSDateFormatter()
+        dateFormater.dateFormat = "MM/dd/yyyy"
+        let stringDate = dateFormater.stringFromDate(log.date!)
+        
+        
+        cell.textLabel?.text = log.valve
+        cell.detailTextLabel?.text = "\(stringDate)"
 
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
