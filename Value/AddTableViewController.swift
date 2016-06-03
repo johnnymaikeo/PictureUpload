@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreLocation
-
+import Alamofire
 
 
 class AddTableViewController: UITableViewController, UITextFieldDelegate, CLLocationManagerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -21,6 +21,7 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate, CLLoca
     var locationManager:CLLocationManager!
     var imagePicker: UIImagePickerController!
     let imageHelper:ImageHelper = ImageHelper()
+    var delegate:ListTableViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -122,13 +123,49 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate, CLLoca
         if let viewController = segue.destinationViewController as? SelectValveViewController {
             viewController.delegate = self
         }
-        
     }
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         self.performSegueWithIdentifier("SegueAddToSelectValve", sender: self);
         return false
     }
+    
+    func postaData(valve:String, latitude:String, longitude:String) -> Void {
+        // init paramters Dictionary
+        let parameters: [String: String] = [ "id": valve, "longitude": longitude, "latitude": latitude ]
+        
+        let URL = "http://hoewap65:82/api/Valve"
+        
+        let image = self.imageValve.image
+        
+        
+        Alamofire.upload(.POST, URL, multipartFormData: {
+            multipartFormData in
+            
+            if let _image = image {
+                if let imageData = UIImageJPEGRepresentation(_image, 0.5) {
+                    multipartFormData.appendBodyPart(data: imageData, name: "picture", fileName: "file.png", mimeType: "image/png")
+                }
+            }
+            
+            for (key, value) in parameters {
+                multipartFormData.appendBodyPart(data: value.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!, name: key)
+            }
+            
+            }, encodingCompletion: { encodingResult in
+                switch encodingResult {
+                case .Success(let upload, _, _):
+                    upload.responseJSON { response in
+                        debugPrint(response)
+                        self.delegate?.success()
+                    }
+                case .Failure(let encodingError):
+                    print(encodingError)
+                    self.delegate?.error()
+                }
+        })
+    }
+    
     
     @IBAction func saveValveSubmission(sender: AnyObject) {
         
@@ -139,6 +176,14 @@ class AddTableViewController: UITableViewController, UITextFieldDelegate, CLLoca
         log.valve = self.textFieldValve.text
         log.latitude = Double(self.textFieldLatitude.text!)
         log.longitude = Double(self.textFieldLongitude.text!)
+        
+        if let valve:String = self.textFieldValve.text {
+            if let latitude:String = self.textFieldLatitude.text {
+                if let longitude:String = self.textFieldLongitude.text {
+                    self.postaData(valve, latitude: latitude, longitude: longitude)
+                }
+            }
+        }
         
         repository.save()
         
